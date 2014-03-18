@@ -1,5 +1,4 @@
 ﻿using System;
-using GalaSoft.MvvmLight;
 using UTCClock.Business.Model;
 
 namespace UTCClock.Business.ViewModel

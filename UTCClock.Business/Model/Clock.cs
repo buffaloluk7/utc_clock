@@ -1,9 +1,9 @@
-﻿using GalaSoft.MvvmLight;
-using System;
+﻿using System;
+using UTCClock.Business.Interfaces;
 
 namespace UTCClock.Business.Model
 {
-    internal sealed class Clock : ObservableObject
+    public sealed class Clock : ObservableSubjectBase
     {
         #region Properties
 
@@ -23,7 +23,12 @@ namespace UTCClock.Business.Model
         public DateTime Time
         {
             get { return this.time; }
-            set { base.Set<DateTime>(ref this.time, value); }
+            set 
+            { 
+                this.time = value;
+                this.Notify();
+                System.Diagnostics.Debug.WriteLine("Setting time to " + time.ToString());
+            }
         }
 
         #endregion
@@ -38,6 +43,5 @@ namespace UTCClock.Business.Model
         }
 
         #endregion
-
     }
 }
