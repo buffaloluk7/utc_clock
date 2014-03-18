@@ -25,6 +25,7 @@ namespace UTCClock.Business
         {
             foreach(IObserver observer in observers)
             {
+                System.Diagnostics.Debug.WriteLine("Notifying " + observer.ToString());
                 observer.Update(this);
             }
         }

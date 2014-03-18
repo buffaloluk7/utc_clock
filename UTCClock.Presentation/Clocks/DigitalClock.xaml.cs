@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace UTCClock.Presentation.WPF
+namespace UTCClock.Presentation.Clocks
 {
     /// <summary>
-    /// Interaktionslogik für Clock1.xaml
+    /// Interaction logic for DigitalClock.xaml
     /// </summary>
-    public partial class Clock1 : Window
+    public partial class DigitalClock : Window
     {
-        public Clock1()
+        public DigitalClock()
         {
             InitializeComponent();
         }

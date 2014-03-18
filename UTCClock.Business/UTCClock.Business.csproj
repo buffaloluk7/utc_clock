@@ -67,7 +67,10 @@
     <Compile Include="Model\Clock.cs" />
     <Compile Include="Base\ObservableSubjectBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModelCommands\VMCommand.cs" />
     <Compile Include="ViewModel\ClockViewModel.cs" />
+    <Compile Include="ViewModel\DigitalClockWindowViewModel.cs" />
+    <Compile Include="ViewModel\ConsoleWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>

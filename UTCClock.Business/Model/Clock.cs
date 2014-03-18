@@ -27,7 +27,7 @@ namespace UTCClock.Business.Model
             { 
                 this.time = value;
                 this.Notify();
-                System.Diagnostics.Debug.WriteLine("Setting time to " + time.ToString());
+                System.Diagnostics.Debug.WriteLine("Time set to " + Time.ToString());
             }
         }
 
@@ -37,7 +37,7 @@ namespace UTCClock.Business.Model
 
         static Clock() { }
 
-        public Clock(DateTime time)
+        private Clock(DateTime time)
         {
             this.time = time;
         }
