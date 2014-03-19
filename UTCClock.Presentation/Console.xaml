@@ -1,0 +1,23 @@
+﻿<Window x:Class="UTCClock.Presentation.Console"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:UTCClock.Business.ViewModel;assembly=UTCClock.Business"
+        Title="Console" Height="350" Width="525">
+    <Grid Margin="10">
+        <Grid.DataContext>
+            <vm:ConsoleWindowViewModel />
+        </Grid.DataContext>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+        <TextBox Grid.Column="0" Grid.Row="1" x:Name="SearchQuery">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=SearchQuery, Path=Text}" Key="Return" />
+            </TextBox.InputBindings>
+        </TextBox>
+    </Grid>
+</Window>
