@@ -59,7 +59,7 @@ namespace UTCClock.Business.ViewModels
 
         public void Update()
         {
-            System.Diagnostics.Debug.WriteLine("DigitalClock 3 received update!");
+            System.Diagnostics.Debug.WriteLine("DigitalClock 4 received update!");
 
             this.Hour = this.clock.Time.Hour;
             this.Minute = this.clock.Time.Minute;
