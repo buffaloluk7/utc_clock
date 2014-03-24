@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C2AF48
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTCClock.Presentation", "UTCClock.Presentation\UTCClock.Presentation.csproj", "{685886E6-CE8C-4B9D-94BE-D2B879030857}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTCClock.Presentation", "UTCClock.Presentation\UTCClock.Presentation.csproj", "{458ADF4B-4AFC-4688-A81E-FF882B22157B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,10 +24,10 @@ Global
 		{87CBD1A2-645B-49EE-8203-560A3DF12D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87CBD1A2-645B-49EE-8203-560A3DF12D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87CBD1A2-645B-49EE-8203-560A3DF12D44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{685886E6-CE8C-4B9D-94BE-D2B879030857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{685886E6-CE8C-4B9D-94BE-D2B879030857}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{685886E6-CE8C-4B9D-94BE-D2B879030857}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{685886E6-CE8C-4B9D-94BE-D2B879030857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{458ADF4B-4AFC-4688-A81E-FF882B22157B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{458ADF4B-4AFC-4688-A81E-FF882B22157B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{458ADF4B-4AFC-4688-A81E-FF882B22157B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{458ADF4B-4AFC-4688-A81E-FF882B22157B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

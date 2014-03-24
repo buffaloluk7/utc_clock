@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UTCClock.Business.Interfaces;
 
-namespace UTCClock.Business
+namespace UTCClock.Business.Common
 {
     public abstract class ObservableSubjectBase : IObservable
     {
@@ -23,10 +19,11 @@ namespace UTCClock.Business
 
         public void Notify()
         {
+            // Eventuell in Tasks auslagern
             foreach(IObserver observer in observers)
             {
                 System.Diagnostics.Debug.WriteLine("Notifying " + observer.ToString());
-                observer.Update(this);
+                observer.Update();
             }
         }
     }

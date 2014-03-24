@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using UTCClock.Business.Interfaces;
 
 namespace UTCClock.Business
 {
-    class CommandExecuter
+    public class CommandExecuter
     {
         private readonly static CommandExecuter instance = new CommandExecuter();
-        private readonly Stack<KeyValuePair<ClockCommandBase, object>> undoCommands = new Stack<KeyValuePair<ClockCommandBase, object>>();
-        private readonly Stack<KeyValuePair<ClockCommandBase, object>> redoCommands = new Stack<KeyValuePair<ClockCommandBase, object>>();
+        private readonly Stack<KeyValuePair<ICommandBase, object>> undoCommands = new Stack<KeyValuePair<ICommandBase, object>>();
+        private readonly Stack<KeyValuePair<ICommandBase, object>> redoCommands = new Stack<KeyValuePair<ICommandBase, object>>();
 
         public static CommandExecuter Instance
         {
@@ -19,13 +16,13 @@ namespace UTCClock.Business
 
         private CommandExecuter() { }
 
-        void ExecuteCommand(ClockCommandBase command, object parameter)
+        void ExecuteCommand(ICommandBase command, object parameter)
         {
             if (command.CanExecute(parameter))
             {
                 redoCommands.Clear();
                 command.Execute(parameter);
-                undoCommands.Push(new KeyValuePair<ClockCommandBase, object>(command, parameter));
+                undoCommands.Push(new KeyValuePair<ICommandBase, object>(command, parameter));
             }
         }
 

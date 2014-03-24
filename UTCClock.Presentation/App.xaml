@@ -1,8 +1,15 @@
 ﻿<Application x:Class="UTCClock.Presentation.App"
+             StartupUri="Views\MainWindow.xaml"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="Console.xaml">
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:UTCClock.Presentation"
+             xmlns:business="clr-namespace:UTCClock.Business;assembly=UTCClock.Business"
+             mc:Ignorable="d">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <business:ViewModelLocator x:Key="Locator" d:IsDataSource="true" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
