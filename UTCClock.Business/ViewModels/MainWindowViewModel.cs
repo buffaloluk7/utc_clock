@@ -1,22 +1,23 @@
-﻿using GalaSoft.MvvmLight.Command;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Timers;
+using UTCClock.Business.Common;
 using UTCClock.Business.Model;
 using ViHo.Service.Navigation;
 
 namespace UTCClock.Business.ViewModels
 {
-    public class MainWindowViewModel : ClockViewModelBase
+    public class MainWindowViewModel : ObservableObject
     {
         #region Properties
 
         private readonly Timer timer;
-        private readonly List<string> commandLog;
+        private readonly ClockModel clock;
+        private ObservableCollection<string> commandLog;
         private readonly INavigationService navigationService;
 
-        public string CommandLog
+        public ObservableCollection<string> CommandLog
         {
-            get { return string.Join("\n", this.commandLog); }
+            get { return this.commandLog; }
         }
         
         #endregion
@@ -28,7 +29,8 @@ namespace UTCClock.Business.ViewModels
             this.navigationService = navigationService;
 
             this.timer = new Timer();
-            this.commandLog = new List<string>();
+            this.clock = ClockModel.Instance;
+            this.commandLog = new ObservableCollection<string>();
 
             this.SearchCommand = new RelayCommand<string>(onSearchExecuted);
 
@@ -75,7 +77,7 @@ namespace UTCClock.Business.ViewModels
                     break;
             }
 
-            this.commandLog.Add(command);
+            this.CommandLog.Add(command);
         }
 
         #endregion

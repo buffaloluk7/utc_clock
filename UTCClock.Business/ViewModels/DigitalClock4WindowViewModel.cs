@@ -19,7 +19,7 @@ namespace UTCClock.Business.ViewModels
             private set
             {
                 this.hour = value;
-                this.OnPropertyChanged("Hour");
+                this.RaisePropertyChanged("Hour");
             }
         }
 
@@ -29,7 +29,7 @@ namespace UTCClock.Business.ViewModels
             private set
             {
                 this.minute = value;
-                this.OnPropertyChanged("Minute");
+                this.RaisePropertyChanged("Minute");
             }
         }
 
@@ -39,7 +39,7 @@ namespace UTCClock.Business.ViewModels
             private set
             {
                 this.second = value;
-                this.OnPropertyChanged("Second");
+                this.RaisePropertyChanged("Second");
             }
         }
 
@@ -68,7 +68,7 @@ namespace UTCClock.Business.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        private void RaisePropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
 

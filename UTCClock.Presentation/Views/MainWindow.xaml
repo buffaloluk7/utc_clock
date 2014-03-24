@@ -10,7 +10,16 @@
             <RowDefinition />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
-        <TextBox Text="{Binding CommandLog, Mode=OneWay}" AcceptsReturn="True" />
+        <ListBox x:Name="CommandLogListBox" ItemsSource="{Binding CommandLog, Mode=OneWay}" BorderBrush="Transparent">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Command: " />
+                        <TextBlock Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <TextBox Grid.Row="1" x:Name="SearchQuery">
             <TextBox.InputBindings>
                 <KeyBinding Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=SearchQuery, Path=Text}" Key="Return" />

@@ -1,10 +1,9 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using UTCClock.Business.Common;
+﻿using UTCClock.Business.Common;
 using UTCClock.Business.Model;
+
 namespace UTCClock.Business.ViewModels
 {
-    public abstract class ClockViewModelBase : ObservableObject, INotifyPropertyChanged
+    public abstract class ClockViewModelBase : ObservableObject
     {
         #region Properties
 
