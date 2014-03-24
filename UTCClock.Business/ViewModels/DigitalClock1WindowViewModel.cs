@@ -17,7 +17,7 @@ namespace UTCClock.Business.ViewModels
 
         public void Update()
         {
-            System.Diagnostics.Debug.WriteLine("DigitalClock received update!");
+            System.Diagnostics.Debug.WriteLine("DigitalClock 1 received update!");
 
             base.Hour = this.clock.Time.Hour;
             base.Minute = this.clock.Time.Minute;

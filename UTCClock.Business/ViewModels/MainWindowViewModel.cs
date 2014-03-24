@@ -63,6 +63,14 @@ namespace UTCClock.Business.ViewModels
                     this.navigationService.Navigate<DigitalClock2WindowViewModel>();
                     break;
 
+                case "coral":
+                    this.navigationService.Navigate<DigitalClock3WindowViewModel>();
+                    break;
+
+                case "grey":
+                    this.navigationService.Navigate<DigitalClock4WindowViewModel>();
+                    break;
+
                 default:
                     break;
             }

@@ -81,6 +81,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DigitalClock4Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DigitalClock3Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -94,6 +102,12 @@
     </Compile>
     <Compile Include="Views\DigitalClock1Window.xaml.cs">
       <DependentUpon>DigitalClock1Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DigitalClock4Window.xaml.cs">
+      <DependentUpon>DigitalClock4Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DigitalClock3Window.xaml.cs">
+      <DependentUpon>DigitalClock3Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

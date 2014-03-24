@@ -89,6 +89,8 @@
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\DigitalClock2WindowViewModel.cs" />
     <Compile Include="ViewModels\DigitalClock1WindowViewModel.cs" />
+    <Compile Include="ViewModels\DigitalClock4WindowViewModel.cs" />
+    <Compile Include="ViewModels\DigitalClock3WindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ClockViewModelBase.cs" />
   </ItemGroup>

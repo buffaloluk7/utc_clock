@@ -24,6 +24,8 @@ namespace UTCClock.Presentation
             viewViewModelMapper.Add(typeof(MainWindowViewModel), typeof(MainWindow));
             viewViewModelMapper.Add(typeof(DigitalClock1WindowViewModel), typeof(DigitalClock1Window));
             viewViewModelMapper.Add(typeof(DigitalClock2WindowViewModel), typeof(DigitalClock2Window));
+            viewViewModelMapper.Add(typeof(DigitalClock3WindowViewModel), typeof(DigitalClock3Window));
+            viewViewModelMapper.Add(typeof(DigitalClock4WindowViewModel), typeof(DigitalClock4Window));
 
             var locator = App.Current.Resources["Locator"] as ViewModelLocator;
             var navigationService = new NavigationService(viewViewModelMapper);
