@@ -79,8 +79,9 @@
   <ItemGroup>
     <Compile Include="Common\ObservableObject.cs" />
     <Compile Include="Common\RelayCommand.cs" />
-    <Compile Include="Interfaces\ICommandBase.cs" />
-    <Compile Include="Commands\CommandExecuter.cs" />
+    <Compile Include="Interfaces\ICommand.cs" />
+    <Compile Include="Interfaces\IStackableCommand.cs" />
+    <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Interfaces\IUnExecuteableCommand.cs" />
     <Compile Include="Interfaces\IObservable.cs" />

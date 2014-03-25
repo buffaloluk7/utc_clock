@@ -9,22 +9,31 @@ namespace UTCClock.Business.Common
 
         public void Subscribe(IObserver observer)
         {
-            observers.Add(observer);
+            if (!this.observers.Contains(observer))
+            {
+                this.observers.Add(observer);
+            }
         }
 
         public void Unsubscribe(IObserver observer)
         {
-            observers.Remove(observer);
+            if (this.observers.Contains(observer))
+            {
+                this.observers.Remove(observer);
+            }
         }
 
         public void Notify()
         {
             // Eventuell in Tasks auslagern
-            foreach(IObserver observer in observers)
+            foreach(IObserver observer in this.observers)
             {
-                System.Diagnostics.Debug.WriteLine("Notifying " + observer.ToString());
-                observer.Update();
+                if (observer != null)
+                {
+                    observer.Update();
+                }
             }
+            this.observers.RemoveAll(o => o == null);
         }
     }
 }

@@ -53,9 +53,17 @@ namespace UTCClock.Business.ViewModels
 
         #region Command Implementations
 
-        private void onSearchExecuted(string command)
+        private void onSearchExecuted(string input)
         {
-            switch (command)
+            // CommandFactory nach gültigen Command abfragen, returns new ICommand(arguments)
+            // Undo, Redo sollte ein eigenständiges Command sein, welches nur ICommand implementiert
+            // CommandManager.Instance.isValidCommand(string input, out ICommand command) aufrufen,
+            // liefert als out-Variable das fertige Command zurück, danach über CommandManager.Instance.Execute(command)
+            // ausführen, welcher sich um den Undo-/Redo-Stack kümmert. Da CommandManager statisch ist, kann Undo/Redo
+            // darauf einfach zugreifen und UndoCommand bzw. RedoCommand aufrufen.
+            // Frage: Somit kann jedes Command auf Undo/Redo zugreifen. Soll das möglich sein? Wie verhindern?
+
+            switch (input)
             {
                 case "beige":
                     this.navigationService.Navigate<DigitalClock1WindowViewModel>();
@@ -77,7 +85,7 @@ namespace UTCClock.Business.ViewModels
                     break;
             }
 
-            this.CommandLog.Add(command);
+            this.CommandLog.Add(input);
         }
 
         #endregion
