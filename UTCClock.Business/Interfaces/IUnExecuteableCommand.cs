@@ -2,6 +2,6 @@
 {
     public interface IUnExecuteableCommand
     {
-        void UnExecute(object argument = null);
+        void UnExecute();
     }
 }

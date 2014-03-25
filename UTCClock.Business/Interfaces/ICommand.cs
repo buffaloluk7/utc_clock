@@ -2,8 +2,8 @@
 {
     public interface ICommand
     {
-        bool canExecute(object argument = null);
+        bool canExecute();
 
-        void Execute(object argument = null);
+        void Execute();
     }
 }

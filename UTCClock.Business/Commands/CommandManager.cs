@@ -6,8 +6,8 @@ namespace UTCClock.Business.Commands
     public class CommandManager
     {
         private readonly static CommandManager instance = new CommandManager();
-        private readonly Stack<KeyValuePair<IStackableCommand, object>> undoCommands = new Stack<KeyValuePair<IStackableCommand, object>>();
-        private readonly Stack<KeyValuePair<IStackableCommand, object>> redoCommands = new Stack<KeyValuePair<IStackableCommand, object>>();
+        private readonly Stack<IStackableCommand> undoCommands = new Stack<IStackableCommand>();
+        private readonly Stack<IStackableCommand> redoCommands = new Stack<IStackableCommand>();
 
         public static CommandManager Instance
         {
@@ -16,19 +16,21 @@ namespace UTCClock.Business.Commands
 
         private CommandManager() { }
 
-        public void ExecuteCommand(ICommand command, object argument)
+        public void ExecuteCommand(ICommand command)
         {
-            if (command.canExecute(argument))
+            if (command.canExecute())
             {
                 redoCommands.Clear();
-                command.Execute(argument);
+                command.Execute();
 
                 if (command is IStackableCommand)
                 {
-                    undoCommands.Push(new KeyValuePair<IStackableCommand, object>(command as IStackableCommand, argument));
+                    undoCommands.Push(command as IStackableCommand);
                 }
             }
         }
+
+        #region Undo
 
         public void UndoCommand()
         {
@@ -38,10 +40,14 @@ namespace UTCClock.Business.Commands
             }
 
             var lastCommand = undoCommands.Pop();
-            lastCommand.Key.Execute(lastCommand.Value);
+            lastCommand.Execute();
 
             redoCommands.Push(lastCommand);
         }
+
+        #endregion
+
+        #region Redo
 
         public void RedoCommand()
         {
@@ -51,9 +57,11 @@ namespace UTCClock.Business.Commands
             }
 
             var lastCommand = redoCommands.Pop();
-            lastCommand.Key.UnExecute(lastCommand.Value);
+            lastCommand.UnExecute();
 
             undoCommands.Push(lastCommand);
         }
+
+        #endregion
     }
 }
