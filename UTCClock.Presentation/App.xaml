@@ -6,7 +6,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:UTCClock.Presentation"
              xmlns:business="clr-namespace:UTCClock.Business;assembly=UTCClock.Business"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
             <business:ViewModelLocator x:Key="Locator" d:IsDataSource="true" />

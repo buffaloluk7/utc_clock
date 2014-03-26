@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UTCClock.Business.Interfaces;
 using UTCClock.Business.Model;
 
@@ -10,11 +6,16 @@ namespace UTCClock.Business.Commands
 {
     class SetCommand : IStackableCommand
     {
+        #region Properties
+
         private int new_hours;
         private int new_minutes;
         private int new_seconds;
-
         private DateTime old_time;
+
+        #endregion
+
+        #region Constructors
 
         public SetCommand(int hours, int minutes, int seconds)
         {
@@ -23,7 +24,11 @@ namespace UTCClock.Business.Commands
             this.new_seconds = seconds;
         }
 
-        public bool canExecute()
+        #endregion
+
+        #region IStackableCommand Implementations
+
+        public bool CanExecute()
         {
             return (new_hours >= 0 && new_minutes >= 0 && new_seconds >= 0 && new_minutes < 60 && new_seconds < 60);
         }
@@ -40,5 +45,7 @@ namespace UTCClock.Business.Commands
         {
             ClockModel.Instance.Time = old_time;
         }
+
+        #endregion
     }
 }

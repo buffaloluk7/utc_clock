@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using UTCClock.Business.Enums;
 using UTCClock.Business.Interfaces;
 
 namespace UTCClock.Business.Commands
@@ -14,32 +13,48 @@ namespace UTCClock.Business.Commands
 
         private CommandFactory() { }
 
-        public ICommand createCommand(CommandType type, string input)
+        public static CommandFactory Instance 
         {
+            get
+            {
+                return instance;
+            }
+        }
+
+        public ICommand CreateCommand(CommandType type, string input)
+        {
+            if (type == CommandType.None)
+            {
+                throw new ArgumentNullException("type");
+            }
+
             ICommand command = null;
+            int h, m, s;
+            double x, y;
+            string timezone;
+            ClockType clockType;
+
             List<string> splittedInput = input.Split(' ').ToList();
-            // das commando selbst aus der liste entfernen
+            // Entferne das Command aus der Liste
             splittedInput.RemoveAt(0);
 
             string strRegex = @"(?:(?:[""\-""])(?<param>[""hmsxy""])(?:[""\s""])*(?<value>[""0-9""]*)|(?:[""\-""])(?<param>[""tz""])(?:[""\s""])*(?<value>[""A-z""]*))*";
             MatchCollection matches = Regex.Matches(input, strRegex);
 
-            int h, m, s, x, y;
-            string timezone, clockType;
+            // Setze Default-Werte
+            h = m = s = default(int);
+            x = y = default(double);
+            timezone = string.Empty;
+            clockType = default(ClockType);
 
-            // set default values
-            h = m = s = x = y = 0;
-            timezone = "";
-            clockType = "";
-
-            switch(type)
+            switch (type)
             {
-                case CommandType.INC:
-                case CommandType.DEC:
-                case CommandType.SET:
+                case CommandType.Inc:
+                case CommandType.Dec:
+                case CommandType.Set:
                     foreach (Match match in matches)
                     {
-                        switch(match.Groups["param"].Value)
+                        switch (match.Groups["param"].Value)
                         {
                             case "h":
                                 int.TryParse(match.Groups["value"].Value, out h);
@@ -56,21 +71,21 @@ namespace UTCClock.Business.Commands
                     }
                     break;
 
-                case CommandType.SHOW:
+                case CommandType.Show:
                     foreach (Match match in matches)
                     {
                         switch (match.Groups["param"].Value)
                         {
                             case "x":
-                                int.TryParse(match.Groups["value"].Value, out h);
+                                double.TryParse(match.Groups["value"].Value, out x);
                                 break;
 
                             case "y":
-                                int.TryParse(match.Groups["value"].Value, out m);
+                                double.TryParse(match.Groups["value"].Value, out y);
                                 break;
 
                             case "t":
-                                clockType = match.Groups["value"].Value;
+                                Enum.TryParse<ClockType>(match.Groups["value"].Value, true, out clockType);
                                 break;
 
                             case "z":
@@ -81,35 +96,30 @@ namespace UTCClock.Business.Commands
                     break;
             }
 
-            switch(type)
+            switch (type)
             {
-                case CommandType.INC:
+                case CommandType.Help:
+                    command = new HelpCommand();
+                    break;
+
+                case CommandType.Inc:
                     command = new IncreaseCommand(h, m, s);
                     break;
 
-                case CommandType.DEC:
+                case CommandType.Dec:
                     command = new DecreaseCommand(h, m, s);
                     break;
 
-                case CommandType.SET:
+                case CommandType.Set:
                     command = new SetCommand(h, m, s);
                     break;
 
-                case CommandType.SHOW:
-                    command = new ShowCommand();
-                    // part von lukas
+                case CommandType.Show:
+                    command = new ShowCommand(clockType, timezone, x, y);
                     break;
             }
 
             return command;
-        }
-
-        public static CommandFactory Instance 
-        {
-            get
-            {
-                return instance;
-            }
         }
     }
 }

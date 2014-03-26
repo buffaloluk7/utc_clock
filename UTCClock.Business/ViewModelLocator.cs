@@ -5,17 +5,30 @@ namespace UTCClock.Business
 {
     public sealed class ViewModelLocator
     {
-        private INavigationService navigationService;
+        #region Properties
+
+        public static INavigationService NavigationService
+        {
+            get;
+            private set;
+        }
+
+        #endregion
+
+        #region Register Method
 
         public void Register(INavigationService navigationService)
         {
-            this.navigationService = navigationService;
+            ViewModelLocator.NavigationService = navigationService;
         }
+
+        #endregion
+
+        #region ViewModels
 
         public MainWindowViewModel MainWindow
         {
-            // Könnte man mit Ninject schöner gestalten
-            get { return new MainWindowViewModel(navigationService); }
+            get { return new MainWindowViewModel(); }
         }
 
         public DigitalClock1WindowViewModel DigitalClock1Window
@@ -37,5 +50,7 @@ namespace UTCClock.Business
         {
             get { return new DigitalClock4WindowViewModel(); }
         }
+
+        #endregion
     }
 }

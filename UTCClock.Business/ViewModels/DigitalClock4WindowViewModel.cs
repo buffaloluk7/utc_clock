@@ -55,7 +55,7 @@ namespace UTCClock.Business.ViewModels
 
         #endregion
 
-        #region Implementations
+        #region IObserver, INotifyPropertyChanged Implementations
 
         public void Update()
         {

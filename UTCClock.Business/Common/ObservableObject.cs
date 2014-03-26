@@ -11,6 +11,8 @@ namespace UTCClock.Business.Common
 
         #endregion
 
+        #region Protected Metrhods
+
         protected bool Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (object.Equals(storage, value))
@@ -31,5 +33,7 @@ namespace UTCClock.Business.Common
                 eventHandler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        #endregion
     }
 }

@@ -13,7 +13,7 @@ namespace UTCClock.Business.ViewModels
 
         #endregion
 
-        #region Implementations
+        #region IObserver Implementations
 
         public void Update()
         {

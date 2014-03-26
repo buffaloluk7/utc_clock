@@ -64,6 +64,7 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -72,19 +73,24 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ViHo">
-      <HintPath>..\packages\ViHo.1.0.5194.24323\lib\portable-net45+wp80+win\ViHo.dll</HintPath>
+    <Reference Include="ViHo, Version=1.0.5197.36183, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ViHo.1.0.5197.36183\lib\portable-net45+wp80+win\ViHo.dll</HintPath>
+    </Reference>
+    <Reference Include="ViHo.WPF">
+      <HintPath>..\packages\ViHo.WPF.1.0.5197.36190\lib\net45\ViHo.WPF.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandFactory.cs" />
-    <Compile Include="Commands\CommandType.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Enums\CommandTypeEnum.cs" />
     <Compile Include="Commands\DecreaseCommand.cs" />
     <Compile Include="Commands\IncreaseCommand.cs" />
     <Compile Include="Commands\SetCommand.cs" />
     <Compile Include="Commands\ShowCommand.cs" />
     <Compile Include="Common\ObservableObject.cs" />
-    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Enums\ClockTypeEnum.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\IStackableCommand.cs" />
     <Compile Include="Commands\CommandManager.cs" />

@@ -29,7 +29,7 @@ namespace UTCClock.Presentation
 
             var locator = App.Current.Resources["Locator"] as ViewModelLocator;
             var navigationService = new NavigationService(viewViewModelMapper);
-
+            
             locator.Register(navigationService);
 
             this.Navigating -= App_Navigating;

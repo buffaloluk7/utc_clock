@@ -21,7 +21,7 @@ namespace UTCClock.Business.Commands
             this.seconds = seconds;
         }
 
-        public bool canExecute()
+        public bool CanExecute()
         {
             return (hours >= 0 && minutes >= 0 && seconds >= 0 && minutes < 60 && seconds < 60);
         }

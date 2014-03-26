@@ -2,7 +2,7 @@
 {
     public interface ICommand
     {
-        bool canExecute();
+        bool CanExecute();
 
         void Execute();
     }

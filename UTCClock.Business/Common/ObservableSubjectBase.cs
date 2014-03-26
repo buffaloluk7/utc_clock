@@ -5,7 +5,13 @@ namespace UTCClock.Business.Common
 {
     public abstract class ObservableSubjectBase : IObservable
     {
+        #region Properties
+
         private List<IObserver> observers = new List<IObserver>();
+
+        #endregion
+
+        #region IObservable Implementations
 
         public void Subscribe(IObserver observer)
         {
@@ -25,7 +31,6 @@ namespace UTCClock.Business.Common
 
         public void Notify()
         {
-            // Eventuell in Tasks auslagern
             foreach(IObserver observer in this.observers)
             {
                 if (observer != null)
@@ -35,5 +40,7 @@ namespace UTCClock.Business.Common
             }
             this.observers.RemoveAll(o => o == null);
         }
+
+        #endregion
     }
 }

@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using UTCClock.Business.Interfaces;
 
 namespace UTCClock.Business.Commands
 {
     public class CommandManager
     {
+        #region Properties
+
         private readonly static CommandManager instance = new CommandManager();
         private readonly Stack<IStackableCommand> undoCommands = new Stack<IStackableCommand>();
         private readonly Stack<IStackableCommand> redoCommands = new Stack<IStackableCommand>();
@@ -14,11 +18,24 @@ namespace UTCClock.Business.Commands
             get { return CommandManager.instance; }
         }
 
+        #endregion
+
+        #region Constructor
+
         private CommandManager() { }
+
+        #endregion
+
+        #region Execute
 
         public void ExecuteCommand(ICommand command)
         {
-            if (command.canExecute())
+            if (command == null)
+            {
+                throw new ArgumentNullException("command");
+            }
+
+            if (command.CanExecute())
             {
                 redoCommands.Clear();
                 command.Execute();
@@ -30,12 +47,15 @@ namespace UTCClock.Business.Commands
             }
         }
 
+        #endregion
+
         #region Undo
 
         public void UndoCommand()
         {
             if (undoCommands.Count == 0)
             {
+                MessageBox.Show("Nichts rückgängig zu machen.");
                 return;
             }
 
@@ -57,6 +77,7 @@ namespace UTCClock.Business.Commands
             {
                 if (undoCommands.Count == 0)
                 {
+                    MessageBox.Show("Nichts zu wiederholen.");
                     return;
                 }
                 command = undoCommands.Peek();
