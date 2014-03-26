@@ -14,6 +14,7 @@ namespace UTCClock.Business.Commands
         SHOW,
         INC,
         DEC,
+        HELP,
         EXIT
     }
 }

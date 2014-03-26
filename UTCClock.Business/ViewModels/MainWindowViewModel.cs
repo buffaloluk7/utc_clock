@@ -22,7 +22,21 @@ namespace UTCClock.Business.ViewModels
         {
             get { return this.commandLog; }
         }
-        
+
+        private string commandText;
+
+        public string CommandText
+        {
+            get
+            {
+                return this.commandText;
+            }
+            set
+            {
+                base.Set<string>(ref this.commandText, value);
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -81,6 +95,10 @@ namespace UTCClock.Business.ViewModels
                         CommandManager.Instance.RedoCommand();
                         break;
 
+                    case CommandType.HELP:
+                        // help hat keine parameter, daher auch hier her verlagern??
+                        break;
+
                     default:
                         ICommand command = CommandFactory.Instance.createCommand(commandType, input);
                         CommandManager.Instance.ExecuteCommand(command);
@@ -88,7 +106,7 @@ namespace UTCClock.Business.ViewModels
                 }
 
                 this.CommandLog.Add(input);
-                // wie setze ich hier das input feld auf leer?
+                CommandText = null;
             }
             else
             {

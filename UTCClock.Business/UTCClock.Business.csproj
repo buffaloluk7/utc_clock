@@ -82,6 +82,7 @@
     <Compile Include="Commands\DecreaseCommand.cs" />
     <Compile Include="Commands\IncreaseCommand.cs" />
     <Compile Include="Commands\SetCommand.cs" />
+    <Compile Include="Commands\ShowCommand.cs" />
     <Compile Include="Common\ObservableObject.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Interfaces\ICommand.cs" />

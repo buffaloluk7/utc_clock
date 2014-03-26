@@ -20,9 +20,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBox Grid.Row="1" x:Name="SearchQuery">
+        <TextBox Text="{Binding CommandText, Mode=TwoWay}" Grid.Row="1" x:Name="SearchQuery">
             <TextBox.InputBindings>
-                <KeyBinding Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=SearchQuery, Path=Text}" Key="Return" />
+                <KeyBinding Command="{Binding SearchCommand}" Key="Return" />
             </TextBox.InputBindings>
         </TextBox>
     </Grid>
