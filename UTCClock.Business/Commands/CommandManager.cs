@@ -34,15 +34,15 @@ namespace UTCClock.Business.Commands
 
         public void UndoCommand()
         {
-            if (redoCommands.Count == 0)
+            if (undoCommands.Count == 0)
             {
                 return;
             }
 
-            var lastCommand = redoCommands.Pop();
+            var lastCommand = undoCommands.Pop();
             lastCommand.UnExecute();
 
-            undoCommands.Push(lastCommand);
+            redoCommands.Push(lastCommand);
         }
 
         #endregion
@@ -51,16 +51,23 @@ namespace UTCClock.Business.Commands
 
         public void RedoCommand()
         {
+            IStackableCommand command;
 
-            if (undoCommands.Count == 0)
+            if (redoCommands.Count == 0)
             {
-                return;
+                if (undoCommands.Count == 0)
+                {
+                    return;
+                }
+                command = undoCommands.Peek();
+            }
+            else
+            {
+                command = redoCommands.Pop();
             }
 
-            var lastCommand = undoCommands.Pop();
-            lastCommand.Execute();
-
-            redoCommands.Push(lastCommand);
+            command.Execute();
+            undoCommands.Push(command);
         }
 
         #endregion

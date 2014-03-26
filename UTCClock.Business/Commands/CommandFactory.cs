@@ -21,7 +21,7 @@ namespace UTCClock.Business.Commands
             // das commando selbst aus der liste entfernen
             splittedInput.RemoveAt(0);
 
-            string strRegex = @"(?:(?:[""\-""])(?<param>[""hmsxy""])(?:[""\s""])*(?<value>[""0-9""])|(?:[""\-""])(?<param>[""tz""])(?:[""\s""])*(?<value>[""A-z""]*))*";
+            string strRegex = @"(?:(?:[""\-""])(?<param>[""hmsxy""])(?:[""\s""])*(?<value>[""0-9""]*)|(?:[""\-""])(?<param>[""tz""])(?:[""\s""])*(?<value>[""A-z""]*))*";
             MatchCollection matches = Regex.Matches(input, strRegex);
 
             int h, m, s, x, y;

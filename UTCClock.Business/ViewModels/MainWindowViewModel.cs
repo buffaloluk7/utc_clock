@@ -6,6 +6,7 @@ using ViHo.Service.Navigation;
 using System;
 using UTCClock.Business.Commands;
 using UTCClock.Business.Interfaces;
+using GalaSoft.MvvmLight.Command;
 
 namespace UTCClock.Business.ViewModels
 {
@@ -17,13 +18,12 @@ namespace UTCClock.Business.ViewModels
         private readonly ClockModel clock;
         private ObservableCollection<string> commandLog;
         private readonly INavigationService navigationService;
+        private string commandText;
 
         public ObservableCollection<string> CommandLog
         {
             get { return this.commandLog; }
         }
-
-        private string commandText;
 
         public string CommandText
         {
@@ -49,7 +49,7 @@ namespace UTCClock.Business.ViewModels
             this.clock = ClockModel.Instance;
             this.commandLog = new ObservableCollection<string>();
 
-            this.SearchCommand = new RelayCommand<string>(onSearchExecuted);
+            this.SearchCommand = new RelayCommand(onSearchExecuted);
 
             this.timer.Interval = 1000;
             this.timer.Elapsed += timer_Elapsed;
@@ -60,7 +60,7 @@ namespace UTCClock.Business.ViewModels
 
         #region Commands
 
-        public RelayCommand<string> SearchCommand
+        public RelayCommand SearchCommand
         {
             get;
             private set;
@@ -70,7 +70,7 @@ namespace UTCClock.Business.ViewModels
 
         #region Command Implementations
 
-        private void onSearchExecuted(string input)
+        private void onSearchExecuted()
         {
             // CommandFactory nach gültigen Command abfragen, returns new ICommand(arguments)
             // Undo, Redo sollte ein eigenständiges Command sein, welches nur ICommand implementiert
@@ -80,7 +80,7 @@ namespace UTCClock.Business.ViewModels
             // darauf einfach zugreifen und UndoCommand bzw. RedoCommand aufrufen.
             // Frage: Somit kann jedes Command auf Undo/Redo zugreifen. Soll das möglich sein? Wie verhindern?
 
-            string commandString = input.Split(' ')[0];
+            string commandString = CommandText.Split(' ')[0];
             CommandType commandType;
 
             if (Enum.TryParse<CommandType>(commandString, true, out commandType))
@@ -99,14 +99,18 @@ namespace UTCClock.Business.ViewModels
                         // help hat keine parameter, daher auch hier her verlagern??
                         break;
 
+                    case CommandType.EXIT:
+                        // exit application here
+                        break;
+
                     default:
-                        ICommand command = CommandFactory.Instance.createCommand(commandType, input);
+                        ICommand command = CommandFactory.Instance.createCommand(commandType, CommandText);
                         CommandManager.Instance.ExecuteCommand(command);
                         break;
                 }
 
-                this.CommandLog.Add(input);
-                CommandText = null;
+                this.CommandLog.Add(CommandText);
+                CommandText = string.Empty;
             }
             else
             {
