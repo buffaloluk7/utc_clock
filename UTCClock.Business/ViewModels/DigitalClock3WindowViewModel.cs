@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using UTCClock.Business.Interfaces;
 using UTCClock.Business.Model;
 
@@ -9,6 +10,7 @@ namespace UTCClock.Business.ViewModels
         #region Properties
 
         private readonly ClockModel clock;
+        private readonly TimeSpan timeZoneOffset;
         private int hour;
         private int minute;
         private int second;
@@ -47,8 +49,9 @@ namespace UTCClock.Business.ViewModels
 
         #region Constructors
 
-        public DigitalClock3WindowViewModel()
+        public DigitalClock3WindowViewModel(TimeSpan timeZoneOffset)
         {
+            this.timeZoneOffset = timeZoneOffset;
             this.clock = ClockModel.Instance;
             this.clock.Subscribe(this);
         }
@@ -61,9 +64,12 @@ namespace UTCClock.Business.ViewModels
         {
             System.Diagnostics.Debug.WriteLine("DigitalClock 3 received update!");
 
-            this.Hour = this.clock.Time.Hour;
-            this.Minute = this.clock.Time.Minute;
-            this.Second = this.clock.Time.Second;
+            DateTimeOffset dateTime = new DateTimeOffset(this.clock.Time).ToOffset(this.timeZoneOffset);
+            new DateTimeOffset(DateTime.UtcNow, new TimeSpan(3,0,0));
+
+            this.Hour = dateTime.Hour;
+            this.Minute = dateTime.Minute;
+            this.Second = dateTime.Second;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

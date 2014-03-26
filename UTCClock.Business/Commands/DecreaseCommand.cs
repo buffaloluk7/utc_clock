@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UTCClock.Business.Interfaces;
 using UTCClock.Business.Model;
 
@@ -10,9 +6,15 @@ namespace UTCClock.Business.Commands
 {
     public class DecreaseCommand : IStackableCommand
     {
+        #region Properties
+
         private int hours;
         private int minutes;
         private int seconds;
+
+        #endregion
+
+        #region Constructors
 
         public DecreaseCommand(int hours, int minutes, int seconds)
         {
@@ -20,6 +22,10 @@ namespace UTCClock.Business.Commands
             this.minutes = minutes;
             this.seconds = seconds;
         }
+
+        #endregion
+
+        #region IStackableCommand Implementations
 
         public bool CanExecute()
         {
@@ -37,5 +43,7 @@ namespace UTCClock.Business.Commands
             TimeSpan t = new TimeSpan(hours, minutes, seconds);
             ClockModel.Instance.Time = ClockModel.Instance.Time.Add(t);
         }
+
+        #endregion
     }
 }

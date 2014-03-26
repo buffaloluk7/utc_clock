@@ -1,4 +1,5 @@
-﻿using UTCClock.Business.ViewModels;
+﻿using System;
+using UTCClock.Business.ViewModels;
 using ViHo.Service.Navigation;
 
 namespace UTCClock.Business
@@ -43,7 +44,7 @@ namespace UTCClock.Business
 
         public DigitalClock3WindowViewModel DigitalClock3Window
         {
-            get { return new DigitalClock3WindowViewModel(); }
+            get { return new DigitalClock3WindowViewModel(new TimeSpan(3,0,0)); }
         }
 
         public DigitalClock4WindowViewModel DigitalClock4Window
