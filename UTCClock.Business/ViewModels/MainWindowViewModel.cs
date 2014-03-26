@@ -3,6 +3,9 @@ using System.Timers;
 using UTCClock.Business.Common;
 using UTCClock.Business.Model;
 using ViHo.Service.Navigation;
+using System;
+using UTCClock.Business.Commands;
+using UTCClock.Business.Interfaces;
 
 namespace UTCClock.Business.ViewModels
 {
@@ -63,29 +66,34 @@ namespace UTCClock.Business.ViewModels
             // darauf einfach zugreifen und UndoCommand bzw. RedoCommand aufrufen.
             // Frage: Somit kann jedes Command auf Undo/Redo zugreifen. Soll das möglich sein? Wie verhindern?
 
-            switch (input)
+            string commandString = input.Split(' ')[0];
+            CommandType commandType;
+
+            if (Enum.TryParse<CommandType>(commandString, true, out commandType))
             {
-                case "beige":
-                    this.navigationService.Navigate<DigitalClock1WindowViewModel>();
-                    break;
+                switch(commandType)
+                {
+                    case CommandType.UNDO:
+                        CommandManager.Instance.UndoCommand();
+                        break;
 
-                case "blue":
-                    this.navigationService.Navigate<DigitalClock2WindowViewModel>();
-                    break;
+                    case CommandType.REDO:
+                        CommandManager.Instance.RedoCommand();
+                        break;
 
-                case "coral":
-                    this.navigationService.Navigate<DigitalClock3WindowViewModel>();
-                    break;
+                    default:
+                        ICommand command = CommandFactory.Instance.createCommand(commandType, input);
+                        CommandManager.Instance.ExecuteCommand(command);
+                        break;
+                }
 
-                case "grey":
-                    this.navigationService.Navigate<DigitalClock4WindowViewModel>();
-                    break;
-
-                default:
-                    break;
+                this.CommandLog.Add(input);
+                // wie setze ich hier das input feld auf leer?
             }
-
-            this.CommandLog.Add(input);
+            else
+            {
+                // invalid command
+            }
         }
 
         #endregion
