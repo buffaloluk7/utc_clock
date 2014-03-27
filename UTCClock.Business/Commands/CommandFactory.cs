@@ -12,15 +12,16 @@ namespace UTCClock.Business.Commands
     public class CommandFactory
     {
         private static readonly CommandFactory instance = new CommandFactory();
+        private Dictionary<IEnumerable<string>, TimeSpan> timeZonesDictionary = new Dictionary<IEnumerable<string>,TimeSpan>();
 
-        private CommandFactory() { }
+        private CommandFactory()
+        {
+            this.parseTimeZones();
+        }
 
         public static CommandFactory Instance 
         {
-            get
-            {
-                return instance;
-            }
+            get { return instance; }
         }
 
         public ICommand CreateCommand(CommandType type, string input)
@@ -91,7 +92,7 @@ namespace UTCClock.Business.Commands
                                 break;
 
                             case "z":
-                                this.parseTimeZoneName(match.Groups["value"].Value, out timeZone);
+                                this.TryParseTimeZone(match.Groups["value"].Value, out timeZone);
                                 break;
                         }
                     }
@@ -123,26 +124,36 @@ namespace UTCClock.Business.Commands
 
             return command;
         }
+
+        private void TryParseTimeZone(string timeZoneName, out TimeSpan timeZoneOffet)
+        {
+            timeZoneOffet = new TimeSpan();
+            timeZoneName = timeZoneName.ToLower();
+
+            foreach (var tz in this.timeZonesDictionary)
+            {
+                if (tz.Key.Contains(timeZoneName))
+                {
+                    timeZoneOffet = tz.Value;
+                    return;
+                }
+            }
+        }
         
-        private void parseTimeZoneName(string timeZoneName, out TimeSpan timeZoneOffset)
+        private void parseTimeZones()
         {
             ReadOnlyCollection<TimeZoneInfo> timeZones = TimeZoneInfo.GetSystemTimeZones();
-            string strRegex = @"(?:\(UTC(?:[""\+\-""][""0-9""]{2}:[""0-9""]{2}){0,}\)\s)(.*)";
+            string strRegex = @"(?:\(UTC(?:[""\+\-""][""0-9""]{2}:[""0-9""]{2}){0,}\)\s)(?<name>.*)";
             Regex myRegex = new Regex(strRegex, RegexOptions.IgnoreCase);
-            timeZoneOffset = new TimeSpan();
 
             foreach (var timeZone in timeZones)
             {
-                foreach (Match match in myRegex.Matches(timeZoneName))
+                foreach (Match match in myRegex.Matches(timeZone.DisplayName))
                 {
                     if (match.Success)
                     {
-                        List<string> cities = match.Groups["name"].Value.Split(',').ToList();
-                        if (cities.Contains(timeZoneName))
-                        {
-                            timeZoneOffset = timeZone.BaseUtcOffset;
-                            return;
-                        }
+                        IEnumerable<string> timeZoneCity = match.Groups["name"].Value.Split(new string[] { ", " }, StringSplitOptions.None).ToList().ConvertAll(t => t.ToLower());
+                        this.timeZonesDictionary.Add(timeZoneCity, timeZone.BaseUtcOffset);
                     }
                 }
             }
