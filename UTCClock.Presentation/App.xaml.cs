@@ -22,10 +22,10 @@ namespace UTCClock.Presentation
         {
             Dictionary<Type, Type> viewViewModelMapper = new Dictionary<Type, Type>();
             viewViewModelMapper.Add(typeof(MainWindowViewModel), typeof(MainWindow));
-            viewViewModelMapper.Add(typeof(DigitalClock1WindowViewModel), typeof(DigitalClock1Window));
-            viewViewModelMapper.Add(typeof(DigitalClock2WindowViewModel), typeof(DigitalClock2Window));
-            viewViewModelMapper.Add(typeof(DigitalClock3WindowViewModel), typeof(DigitalClock3Window));
-            viewViewModelMapper.Add(typeof(DigitalClock4WindowViewModel), typeof(DigitalClock4Window));
+            viewViewModelMapper.Add(typeof(BeigeClockWindowViewModel), typeof(BeigeClockWindow));
+            viewViewModelMapper.Add(typeof(BlueClockWindowViewModel), typeof(BlueClockWindow));
+            viewViewModelMapper.Add(typeof(CoralClockWindowViewModel), typeof(CoralClockWindow));
+            viewViewModelMapper.Add(typeof(GreyClockWindowViewModel), typeof(GreyClockWindow));
 
             var locator = App.Current.Resources["Locator"] as ViewModelLocator;
             var navigationService = new NavigationService(viewViewModelMapper);

@@ -8,7 +8,7 @@ namespace UTCClock.Business
     {
         #region Properties
 
-        public static INavigationService NavigationService
+        public static INavigationWPFService NavigationService
         {
             get;
             private set;
@@ -18,7 +18,7 @@ namespace UTCClock.Business
 
         #region Register Method
 
-        public void Register(INavigationService navigationService)
+        public void Register(INavigationWPFService navigationService)
         {
             ViewModelLocator.NavigationService = navigationService;
         }
@@ -32,24 +32,24 @@ namespace UTCClock.Business
             get { return new MainWindowViewModel(); }
         }
 
-        public DigitalClock1WindowViewModel DigitalClock1Window
+        public BeigeClockWindowViewModel BeigeClockWindow
         {
-            get { return new DigitalClock1WindowViewModel(); }
+            get { return new BeigeClockWindowViewModel(); }
         }
 
-        public DigitalClock2WindowViewModel DigitalClock2Window
+        public BlueClockWindowViewModel BlueClockWindow
         {
-            get { return new DigitalClock2WindowViewModel(); }
+            get { return new BlueClockWindowViewModel(); }
         }
 
-        public DigitalClock3WindowViewModel DigitalClock3Window
+        public CoralClockWindowViewModel CoralClockWindow
         {
-            get { return new DigitalClock3WindowViewModel(new TimeSpan(3,0,0)); }
+            get { return new CoralClockWindowViewModel(); }
         }
 
-        public DigitalClock4WindowViewModel DigitalClock4Window
+        public GreyClockWindowViewModel GreyClockWindow
         {
-            get { return new DigitalClock4WindowViewModel(); }
+            get { return new GreyClockWindowViewModel(); }
         }
 
         #endregion

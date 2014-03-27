@@ -73,13 +73,13 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="ViHo, Version=1.0.5197.36183, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ViHo, Version=1.0.5199.25227, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ViHo.1.0.5197.36183\lib\portable-net45+wp80+win\ViHo.dll</HintPath>
+      <HintPath>..\packages\ViHo.1.0.5199.25227\lib\portable-net45+wp80+win\ViHo.dll</HintPath>
     </Reference>
-    <Reference Include="ViHo.WPF, Version=1.0.5197.36190, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ViHo.WPF, Version=1.0.5199.25235, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ViHo.WPF.1.0.5197.36190\lib\net45\ViHo.WPF.dll</HintPath>
+      <HintPath>..\packages\ViHo.WPF.1.0.5199.25235\lib\net45\ViHo.WPF.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -90,19 +90,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\DigitalClock2Window.xaml">
+    <Page Include="Views\BlueClockWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DigitalClock1Window.xaml">
+    <Page Include="Views\BeigeClockWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DigitalClock4Window.xaml">
+    <Page Include="Views\GreyClockWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DigitalClock3Window.xaml">
+    <Page Include="Views\CoralClockWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,17 +114,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\DigitalClock2Window.xaml.cs">
-      <DependentUpon>DigitalClock2Window.xaml</DependentUpon>
+    <Compile Include="Views\BlueClockWindow.xaml.cs">
+      <DependentUpon>BlueClockWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DigitalClock1Window.xaml.cs">
-      <DependentUpon>DigitalClock1Window.xaml</DependentUpon>
+    <Compile Include="Views\BeigeClockWindow.xaml.cs">
+      <DependentUpon>BeigeClockWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DigitalClock4Window.xaml.cs">
-      <DependentUpon>DigitalClock4Window.xaml</DependentUpon>
+    <Compile Include="Views\GreyClockWindow.xaml.cs">
+      <DependentUpon>GreyClockWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DigitalClock3Window.xaml.cs">
-      <DependentUpon>DigitalClock3Window.xaml</DependentUpon>
+    <Compile Include="Views\CoralClockWindow.xaml.cs">
+      <DependentUpon>CoralClockWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

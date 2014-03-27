@@ -3,11 +3,11 @@
 namespace UTCClock.Presentation.Views
 {
     /// <summary>
-    /// Interaktionslogik für DigitalClock2Window.xaml
+    /// Interaktionslogik für BlueClockWindow.xaml
     /// </summary>
-    public partial class DigitalClock2Window : Window
+    public partial class BlueClockWindow : Window
     {
-        public DigitalClock2Window()
+        public BlueClockWindow()
         {
             InitializeComponent();
         }
