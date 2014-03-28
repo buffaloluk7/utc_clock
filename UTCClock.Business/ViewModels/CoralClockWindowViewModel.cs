@@ -4,7 +4,7 @@ using ViHo.Json.Extension;
 
 namespace UTCClock.Business.ViewModels
 {
-    public class CoralClockWindowViewModel : DigitalClockViewModelBase
+    public class CoralClockWindowViewModel : DigitalClockViewModelBase, INavigationAware
     {
         public CoralClockWindowViewModel() : base() { }
 

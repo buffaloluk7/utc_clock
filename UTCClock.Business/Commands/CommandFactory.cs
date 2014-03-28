@@ -37,17 +37,13 @@ namespace UTCClock.Business.Commands
             TimeSpan timeZone;
             ClockType clockType;
 
-            List<string> splittedInput = input.Split(' ').ToList();
-            // Entferne das Command aus der Liste
-            splittedInput.RemoveAt(0);
-
             string strRegex = @"(?:(?:[""\-""])(?<param>[""hmsxy""])(?:[""\s""])*(?<value>[""0-9""]*)|(?:[""\-""])(?<param>[""tz""])(?:[""\s""])*(?<value>[""A-z""]*))*";
             MatchCollection matches = Regex.Matches(input, strRegex);
 
             // Setze Default-Werte
-            h = m = s = default(int);
-            x = y = default(double);
-            clockType = default(ClockType);
+            h = m = s = 0;
+            x = y = -1;
+            clockType = ClockType.None;
             timeZone = new TimeSpan(0, 0, 0);
 
             switch (type)
