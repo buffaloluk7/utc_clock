@@ -33,6 +33,11 @@ namespace UTCClock.Business.ViewModels
             protected set { base.Set<int>(ref this.second, value); }
         }
 
+        public string TimeZone
+        {
+            get { return String.Format("{0}{1}", this.timeZoneOffset.Hours > -1 ? '+' : '-', this.timeZoneOffset.ToString(@"hh\:mm")); }
+        }
+
         #endregion
 
         #region Constructors

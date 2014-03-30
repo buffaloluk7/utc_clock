@@ -12,7 +12,8 @@ namespace UTCClock.Business.ViewModels
 
         public async void OnNavigatedTo(string jsonString, NavigationType navigationMode)
         {
-            this.timeZoneOffset = await jsonString.FromJson<TimeSpan>();
+            base.timeZoneOffset = await jsonString.FromJson<TimeSpan>();
+            RaisePropertyChanged("TimeZone");
         }
 
         public void OnNavigatedFrom() { }

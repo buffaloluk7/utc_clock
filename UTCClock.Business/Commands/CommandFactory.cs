@@ -116,6 +116,10 @@ namespace UTCClock.Business.Commands
                 case CommandType.Show:
                     command = new ShowCommand(clockType, timeZone, x, y);
                     break;
+
+                case CommandType.ShowAll:
+                    command = new ShowAllMacroCommand();
+                    break;
             }
 
             return command;

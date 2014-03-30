@@ -7,6 +7,7 @@
         Redo,
         Set,
         Show,
+        ShowAll,
         Inc,
         Dec,
         Help,

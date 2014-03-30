@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="Commands\CommandFactory.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\ShowAllMacroCommand.cs" />
     <Compile Include="Enums\CommandTypeEnum.cs" />
     <Compile Include="Commands\DecreaseCommand.cs" />
     <Compile Include="Commands\IncreaseCommand.cs" />

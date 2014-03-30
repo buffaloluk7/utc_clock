@@ -1,6 +1,6 @@
 ﻿using System;
-using ViHo.Service.Navigation;
 using ViHo.Json.Extension;
+using ViHo.Service.Navigation;
 
 namespace UTCClock.Business.ViewModels
 {
@@ -12,7 +12,8 @@ namespace UTCClock.Business.ViewModels
 
         public async void OnNavigatedTo(string jsonString, NavigationType navigationMode)
         {
-            this.timeZoneOffset = await jsonString.FromJson<TimeSpan>();
+            base.timeZoneOffset = await jsonString.FromJson<TimeSpan>();
+            RaisePropertyChanged("TimeZone");
         }
 
         public void OnNavigatedFrom() { }

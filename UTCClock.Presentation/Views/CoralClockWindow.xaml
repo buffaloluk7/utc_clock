@@ -6,12 +6,18 @@
         Width="300"
         DataContext="{Binding Path=CoralClockWindow, Source={StaticResource Locator}}">
     <Grid Background="Coral">
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32">
-            <Run Text="{Binding Hour, Mode=OneWay, StringFormat=D2}" />
-            <Run Text=":" />
-            <Run Text="{Binding Minute, Mode=OneWay, StringFormat=D2}" />
-            <Run Text=":" />
-            <Run Text="{Binding Second, Mode=OneWay, StringFormat=D2}" />
-        </TextBlock>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock FontSize="32">
+                <Run Text="{Binding Hour, Mode=OneWay, StringFormat=D2}" />
+                <Run Text=":" />
+                <Run Text="{Binding Minute, Mode=OneWay, StringFormat=D2}" />
+                <Run Text=":" />
+                <Run Text="{Binding Second, Mode=OneWay, StringFormat=D2}" />
+            </TextBlock>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">
+                <Run Text="UTC" />
+                <Run Text="{Binding TimeZone, Mode=OneWay}" />
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </Window>
