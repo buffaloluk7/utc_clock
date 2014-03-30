@@ -3,18 +3,33 @@ using UTCClock.Business.Interfaces;
 
 namespace UTCClock.Business.Commands
 {
-    public class HelpCommand : ICommand
+    public class HelpCommand : CommandBase
     {
-        #region ICommand Implementations
+        #region Implementations
 
-        public bool CanExecute()
+        public HelpCommand()
         {
-            return true;
+            base.pattern = @"^(?:help)$";
         }
 
-        public void Execute()
+        public override void Execute()
         {
             MessageBox.Show("Willkommen bei der Hilfe. Ich hoffe ich konnte Dir helfen.", "Hilfe");
+        }
+
+        public override void UnExecute()
+        {
+            return;
+        }
+
+        public override bool IsStackable()
+        {
+            return false;
+        }
+
+        public override CommandBase Build(string input)
+        {
+            return new HelpCommand();
         }
 
         #endregion

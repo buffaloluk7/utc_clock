@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using UTCClock.Business.Interfaces;
 using UTCClock.Business.Model;
 
 namespace UTCClock.Business.Commands
 {
-    public class IncreaseCommand : IStackableCommand
+    public class IncreaseCommand : CommandBase
     {
         #region Properties
 
@@ -15,8 +16,19 @@ namespace UTCClock.Business.Commands
         #endregion
 
         #region Constructors
+        
+        public IncreaseCommand()
+        {
+            // initialize pattern 
+            base.pattern = @"^(?:inc)(?:(?:\s-)(?:(?:h\s+(?<h>[0-9]+))|(?:m\s+(?<m>[0-9]+))|(?:s\s+(?<s>[0-9]+)))){1,3}$";
 
-        public IncreaseCommand(int hours, int minutes, int seconds)
+            // set non-harming default values
+            hours = default(int);
+            minutes = default(int);
+            seconds = default(int);
+        }
+
+        private IncreaseCommand(int hours, int minutes, int seconds)
         {
             this.hours = hours;
             this.minutes = minutes;
@@ -25,20 +37,26 @@ namespace UTCClock.Business.Commands
 
         #endregion
 
-        #region IStackableCommand Implementations
-
-        public bool CanExecute()
+        public override CommandBase Build(string input)
         {
-            return (hours >= 0 && minutes >= 0 && seconds >= 0 && minutes < 60 && seconds < 60);
+            var match = Regex.Match(input, base.pattern);
+
+            int.TryParse(match.Groups["h"].Value, out hours);
+            int.TryParse(match.Groups["m"].Value, out minutes);
+            int.TryParse(match.Groups["s"].Value, out seconds);
+
+            return new IncreaseCommand(hours, minutes, seconds);
         }
 
-        public void Execute()
+        #region Implementations
+
+        public override void Execute()
         {
             TimeSpan t = new TimeSpan(hours, minutes, seconds);
             ClockModel.Instance.Time = ClockModel.Instance.Time.Add(t);
         }
 
-        public void UnExecute()
+        public override void UnExecute()
         {
             TimeSpan t = new TimeSpan(hours, minutes, seconds);
             ClockModel.Instance.Time = ClockModel.Instance.Time.Subtract(t);

@@ -10,8 +10,8 @@ namespace UTCClock.Business.Commands
         #region Properties
 
         private readonly static CommandManager instance = new CommandManager();
-        private readonly Stack<IStackableCommand> undoCommands = new Stack<IStackableCommand>();
-        private readonly Stack<IStackableCommand> redoCommands = new Stack<IStackableCommand>();
+        private readonly Stack<CommandBase> undoCommands = new Stack<CommandBase>();
+        private readonly Stack<CommandBase> redoCommands = new Stack<CommandBase>();
 
         public static CommandManager Instance
         {
@@ -28,22 +28,19 @@ namespace UTCClock.Business.Commands
 
         #region Execute
 
-        public void ExecuteCommand(ICommand command)
+        public void ExecuteCommand(CommandBase command)
         {
             if (command == null)
             {
                 throw new ArgumentNullException("command");
             }
 
-            if (command.CanExecute())
-            {
-                redoCommands.Clear();
-                command.Execute();
+            redoCommands.Clear();
+            command.Execute();
 
-                if (command is IStackableCommand)
-                {
-                    undoCommands.Push(command as IStackableCommand);
-                }
+            if (command.IsStackable())
+            {
+                undoCommands.Push(command);
             }
         }
 
@@ -71,7 +68,7 @@ namespace UTCClock.Business.Commands
 
         public void RedoCommand()
         {
-            IStackableCommand command;
+            CommandBase command;
 
             if (redoCommands.Count == 0)
             {

@@ -72,35 +72,33 @@ namespace UTCClock.Business.ViewModels
             string commandString = this.commandInput.Split(' ')[0];
             CommandType commandType;
 
-            if (Enum.TryParse<CommandType>(commandString, true, out commandType))
+            if (!Enum.TryParse<CommandType>(commandString, true, out commandType))
             {
-                switch(commandType)
-                {
-                    case CommandType.Undo:
-                        CommandManager.Instance.UndoCommand();
-                        break;
-
-                    case CommandType.Redo:
-                        CommandManager.Instance.RedoCommand();
-                        break;
-
-                    case CommandType.Exit:
-                        Environment.Exit(0);
-                        break;
-
-                    default:
-                        ICommand command = CommandFactory.Instance.CreateCommand(commandType, this.commandInput);
-                        CommandManager.Instance.ExecuteCommand(command);
-                        break;
-                }
-
-                this.CommandLog.Add(this.commandInput);
-                this.CommandInput = string.Empty;
+                commandType = CommandType.Custom;
             }
-            else
+
+            switch(commandType)
             {
-                // invalid command
+                case CommandType.Undo:
+                    CommandManager.Instance.UndoCommand();
+                    break;
+
+                case CommandType.Redo:
+                    CommandManager.Instance.RedoCommand();
+                    break;
+
+                case CommandType.Exit:
+                    Environment.Exit(0);
+                    break;
+
+                default:
+                    CommandBase command = CommandFactory.Instance.CreateCommand(this.commandInput);
+                    CommandManager.Instance.ExecuteCommand(command);
+                    break;
             }
+
+            this.CommandLog.Add(this.commandInput);
+            this.CommandInput = string.Empty;
         }
 
         #endregion
