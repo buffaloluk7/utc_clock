@@ -6,7 +6,7 @@ namespace UTCClock.Business.Commands
 {
     public class ShowAllMacroCommand : CommandBase
     {
-        private ShowAllMacroCommand() 
+        public ShowAllMacroCommand() 
         {
             base.pattern = @"^(?:showall)$";
         }

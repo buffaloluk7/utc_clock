@@ -16,13 +16,15 @@ namespace UTCClock.Business.Commands
 
         private CommandFactory()
         {
+            // here we could load command from a dll or something like that
             availableCommands = new CommandBase[] 
             {
                 new IncreaseCommand(),
                 new DecreaseCommand(),
                 new SetCommand(),
                 new HelpCommand(),
-                new ShowCommand()
+                new ShowCommand(),
+                new ShowAllMacroCommand()
             };
         }
 
