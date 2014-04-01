@@ -11,6 +11,11 @@ namespace UTCClock.Business.Commands
         private static readonly CommandFactory instance = new CommandFactory();
         private static IList<ICommand> availableCommands;
 
+        public IList<ICommand> AvailableCommands
+        {
+            get { return CommandFactory.availableCommands; }
+        }
+
         public static CommandFactory Instance
         {
             get { return CommandFactory.instance; }

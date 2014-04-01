@@ -21,7 +21,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBox Text="{Binding CommandInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" x:Name="SearchQuery">
+        <TextBox Text="{Binding CommandInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" x:Name="SearchQuery" VerticalContentAlignment="Center">
             <TextBox.InputBindings>
                 <KeyBinding Command="{Binding SearchCommand}" Key="Return" />
             </TextBox.InputBindings>

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Text;
+using System.Windows.Forms;
 using UTCClock.Business.Interfaces;
 
 namespace UTCClock.Business.Commands
@@ -33,7 +34,18 @@ namespace UTCClock.Business.Commands
 
         public void Execute()
         {
-            MessageBox.Show("Willkommen bei der Hilfe. Ich hoffe ich konnte Dir helfen.", "Hilfe");
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Willkommen bei der Hilfe. Ich hoffe ich konnte Dir helfen.");
+            sb.AppendLine();
+
+            foreach (var command in CommandFactory.Instance.AvailableCommands)
+            {
+                sb.Append(command.Name);
+                sb.Append("\t");
+                sb.AppendLine(command.Description);
+            }
+
+            MessageBox.Show(sb.ToString(), "Hilfe");
         }
 
         #endregion
