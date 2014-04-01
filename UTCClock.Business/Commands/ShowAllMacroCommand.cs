@@ -1,44 +1,52 @@
 ﻿using System.Collections.Generic;
-using UTCClock.Business.Enums;
 using UTCClock.Business.Interfaces;
 
 namespace UTCClock.Business.Commands
 {
-    public class ShowAllMacroCommand : CommandBase
+    public class ShowAllMacroCommand : ICommand
     {
-        public ShowAllMacroCommand() 
+        #region Properties
+
+        public string Name
         {
-            base.pattern = @"^(?:showall)$";
+            get { return "showall"; }
         }
 
-        public override CommandBase Build(string input)
+        public string Description
+        {
+            get { return "Show multiple windows with different clock types."; }
+        }
+
+        #endregion
+
+        #region ICommand Implementations
+
+        public ICommand Make(string arguments)
         {
             return new ShowAllMacroCommand();
         }
 
-        public override void Execute()
+        public bool CanExecute(string arguments)
         {
-            List<CommandBase> commands = new List<CommandBase>();
+            return true;
+        }
 
-            commands.Add(CommandFactory.Instance.CreateCommand("show -t blue -z wien -x 100 -y 100"));
-            commands.Add(CommandFactory.Instance.CreateCommand("show -t coral -z london -x 100 -y 500"));
-            commands.Add(CommandFactory.Instance.CreateCommand("show -t grey -z hawaii -x 500 -y 100"));
-            commands.Add(CommandFactory.Instance.CreateCommand("show -t beige -z peking -x 500 -y 500"));
-
-            foreach (var command in commands)
+        public void Execute()
+        {
+            IList<ICommand> commands = new ICommand[]
             {
-                CommandManager.Instance.ExecuteCommand(command);   
+                CommandFactory.Instance.CreateCommand("show", "-t blue -z wien -x 100 -y 100"),
+                CommandFactory.Instance.CreateCommand("show", "-t coral -z london -x 100 -y 500"),
+                CommandFactory.Instance.CreateCommand("show", "-t grey -z hawaii -x 500 -y 100"),
+                CommandFactory.Instance.CreateCommand("show", "-t beige -z peking -x 500 -y 500")
+            };
+
+            foreach (ICommand command in commands)
+            {
+                CommandManager.Instance.ExecuteCommand(command);
             }
         }
 
-        public override void UnExecute()
-        {
-            return;
-        }
-
-        public override bool IsStackable()
-        {
-            return false;
-        }
+        #endregion
     }
 }

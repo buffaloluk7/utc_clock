@@ -5,14 +5,25 @@ using UTCClock.Business.Model;
 
 namespace UTCClock.Business.Commands
 {
-    class SetCommand : CommandBase
+    public class SetCommand : IUndoableCommand
     {
         #region Properties
 
-        private int hours;
-        private int minutes;
-        private int seconds;
-        private DateTime old_time;
+        private string pattern;
+        private int newHours;
+        private int newMinutes;
+        private int newSeconds;
+        private DateTime oldTime;
+
+        public string Name
+        {
+            get { return "set"; }
+        }
+
+        public string Description
+        {
+            get { return "Sets a specific time."; }
+        }
 
         #endregion
 
@@ -20,27 +31,24 @@ namespace UTCClock.Business.Commands
 
         public SetCommand()
         {
-            // initialize pattern 
-            base.pattern = @"^(?:set)(?:(?:\s-)(?:(?:h\s+(?<h>[0-9]+))|(?:m\s+(?<m>[0-9]+))|(?:s\s+(?<s>[0-9]+)))){1,3}$";
-
-            // set non-harming default values
-            hours = default(int);
-            minutes = default(int);
-            seconds = default(int);
+            this.pattern = "^(?:(?:\\s*-)(?:(?:h\\s+(?<h>[0-9]+))|(?:m\\s+(?<m>[0-9]+))|(?:s\\s+(?<s>[0-9]+)))){1,3}$";
         }
 
         private SetCommand(int hours, int minutes, int seconds)
         {
-            this.hours = hours;
-            this.minutes = minutes;
-            this.seconds = seconds;
+            this.newHours = hours;
+            this.newMinutes = minutes;
+            this.newSeconds = seconds;
         }
 
         #endregion
 
-        public override CommandBase Build(string input)
+        #region IUndoableCommand Implementations
+
+        public ICommand Make(string arguments)
         {
-            var match = Regex.Match(input, base.pattern);
+            Match match = Regex.Match(arguments, this.pattern);
+            int hours = 0, minutes = 0, seconds = 0;
 
             int.TryParse(match.Groups["h"].Value, out hours);
             int.TryParse(match.Groups["m"].Value, out minutes);
@@ -49,19 +57,20 @@ namespace UTCClock.Business.Commands
             return new SetCommand(hours, minutes, seconds);
         }
 
-        #region Implementations
-
-        public override void Execute()
+        public bool CanExecute(string arguments)
         {
-            old_time = ClockModel.Instance.Time;
-            DateTime new_time = new DateTime(old_time.Year, old_time.Month, old_time.Day, hours, minutes, seconds);
-
-            ClockModel.Instance.Time = new_time;
+            return new Regex(this.pattern).Match(arguments).Success;
         }
 
-        public override void UnExecute()
+        public void Execute()
         {
-            ClockModel.Instance.Time = old_time;
+            this.oldTime = ClockModel.Instance.Time;
+            ClockModel.Instance.Time = new DateTime(this.oldTime.Year, this.oldTime.Month, this.oldTime.Day, this.newHours, this.newMinutes, this.newSeconds);
+        }
+
+        public void UnExecute()
+        {
+            ClockModel.Instance.Time = this.oldTime;
         }
 
         #endregion

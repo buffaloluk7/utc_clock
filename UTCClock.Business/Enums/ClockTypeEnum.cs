@@ -6,6 +6,6 @@
         Blue,
         Beige,
         Coral,
-        Grey
+        Grey,
     }
 }

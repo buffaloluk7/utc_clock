@@ -9,9 +9,9 @@ namespace UTCClock.Business.Commands
     {
         #region Properties
 
-        private readonly static CommandManager instance = new CommandManager();
-        private readonly Stack<CommandBase> undoCommands = new Stack<CommandBase>();
-        private readonly Stack<CommandBase> redoCommands = new Stack<CommandBase>();
+        private static readonly CommandManager instance = new CommandManager();
+        private readonly Stack<IUndoableCommand> undoCommands = new Stack<IUndoableCommand>();
+        private readonly Stack<IUndoableCommand> redoCommands = new Stack<IUndoableCommand>();
 
         public static CommandManager Instance
         {
@@ -20,72 +20,75 @@ namespace UTCClock.Business.Commands
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         private CommandManager() { }
 
         #endregion
 
-        #region Execute
+        #region Execute Command
 
-        public void ExecuteCommand(CommandBase command)
+        public void ExecuteCommand(ICommand command)
         {
             if (command == null)
             {
                 throw new ArgumentNullException("command");
             }
 
-            redoCommands.Clear();
+            this.redoCommands.Clear();
             command.Execute();
 
-            if (command.IsStackable())
+            if (command is IUndoableCommand)
             {
-                undoCommands.Push(command);
+                this.undoCommands.Push(command as IUndoableCommand);
             }
         }
 
         #endregion
 
-        #region Undo
+        #region Undo Command
 
         public void UndoCommand()
         {
-            if (undoCommands.Count == 0)
+            if (this.undoCommands.Count == 0)
             {
                 MessageBox.Show("Nichts rückgängig zu machen.");
-                return;
             }
-
-            var lastCommand = undoCommands.Pop();
-            lastCommand.UnExecute();
-
-            redoCommands.Push(lastCommand);
+            else
+            {
+                IUndoableCommand undoableCommand = this.undoCommands.Pop();
+                undoableCommand.UnExecute();
+                this.redoCommands.Push(undoableCommand);
+            }
         }
 
         #endregion
 
-        #region Redo
+        #region Redo Command
 
         public void RedoCommand()
         {
-            CommandBase command;
+            IUndoableCommand undoableCommand;
 
-            if (redoCommands.Count == 0)
+            if (this.redoCommands.Count == 0)
             {
-                if (undoCommands.Count == 0)
+                if (this.undoCommands.Count == 0)
                 {
                     MessageBox.Show("Nichts zu wiederholen.");
                     return;
                 }
-                command = undoCommands.Peek();
+                else
+                {
+                    undoableCommand = this.undoCommands.Peek();
+                }
             }
             else
             {
-                command = redoCommands.Pop();
+                undoableCommand = this.redoCommands.Pop();
             }
 
-            command.Execute();
-            undoCommands.Push(command);
+            undoableCommand.Execute();
+            this.undoCommands.Push(undoableCommand);
         }
 
         #endregion

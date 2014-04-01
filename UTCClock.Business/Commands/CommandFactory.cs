@@ -1,23 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using UTCClock.Business.Enums;
 using UTCClock.Business.Interfaces;
-using UTCClock.Business.Common;
-using System.Collections.ObjectModel;
 
 namespace UTCClock.Business.Commands
 {
     public class CommandFactory
     {
+        #region Properties
+
         private static readonly CommandFactory instance = new CommandFactory();
-        private IList<CommandBase> availableCommands;
+        private static IList<ICommand> availableCommands;
+
+        #endregion
+
+        #region Singleton
+
+        public static CommandFactory Instance
+        {
+            get { return CommandFactory.instance; }
+        }
 
         private CommandFactory()
         {
-            // here we could load command from a dll or something like that
-            availableCommands = new CommandBase[] 
+            CommandFactory.availableCommands = this.getAvailableCommands();
+        }
+
+        #endregion
+
+        #region Create Command
+
+        public ICommand CreateCommand(string commandName, string commandArguments = "")
+        {
+            if (string.IsNullOrWhiteSpace(commandName))
+            {
+                throw new ArgumentException("commandName");
+            }
+                
+            foreach (ICommand command in CommandFactory.availableCommands)
+            {
+                if (command.Name.Equals(commandName, StringComparison.OrdinalIgnoreCase) && command.CanExecute(commandArguments))
+                {
+                    return command.Make(commandArguments);
+                }
+            }
+
+            throw new NotImplementedException("Command does not exist.");
+        }
+
+        #endregion
+
+        #region Available Commands
+
+        private IList<ICommand> getAvailableCommands()
+        {
+            return new ICommand[]
             {
                 new IncreaseCommand(),
                 new DecreaseCommand(),
@@ -28,29 +64,6 @@ namespace UTCClock.Business.Commands
             };
         }
 
-        public static CommandFactory Instance 
-        {
-            get { return instance; }
-        }
-
-        public CommandBase CreateCommand(string input)
-        {
-            CommandBase newCommand = null;
-
-            foreach (var command in availableCommands)
-            {
-                if (command.CanExecute(input))
-                {
-                    newCommand = command.Build(input);
-                }
-            }
-
-            if (newCommand == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return newCommand;
-        }
+        #endregion
     }
 }

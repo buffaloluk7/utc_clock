@@ -5,7 +5,6 @@ using System.Timers;
 using UTCClock.Business.Commands;
 using UTCClock.Business.Common;
 using UTCClock.Business.Enums;
-using UTCClock.Business.Interfaces;
 using UTCClock.Business.Model;
 
 namespace UTCClock.Business.ViewModels
@@ -26,14 +25,15 @@ namespace UTCClock.Business.ViewModels
 
         public string CommandInput
         {
-            get
-            {
-                return this.commandInput;
+            get { return this.commandInput; }
+            set { base.Set<string>(ref this.commandInput, value);
             }
-            set
-            {
-                base.Set<string>(ref this.commandInput, value);
-            }
+        }
+
+        public RelayCommand SearchCommand
+        {
+            get;
+            private set;
         }
 
         #endregion
@@ -55,30 +55,24 @@ namespace UTCClock.Business.ViewModels
 
         #endregion
 
-        #region Commands
-
-        public RelayCommand SearchCommand
-        {
-            get;
-            private set;
-        }
-
-        #endregion
-
         #region Command Implementations
 
         private void onSearchExecuted()
         {
-            string commandString = this.commandInput.Split(' ')[0];
-            CommandType commandType;
+            CommandType commandType = CommandType.None;
+            string commandName = this.commandInput.Split(' ')[0];
+            string commandArguments = this.commandInput.Substring(commandName.Length).Trim();
 
-            if (!Enum.TryParse<CommandType>(commandString, true, out commandType))
+            if (!Enum.TryParse<CommandType>(commandName, true, out commandType))
             {
                 commandType = CommandType.Custom;
             }
 
-            switch(commandType)
+            switch (commandType)
             {
+                case CommandType.None:
+                    throw new NotImplementedException("invalid command");
+
                 case CommandType.Undo:
                     CommandManager.Instance.UndoCommand();
                     break;
@@ -91,10 +85,17 @@ namespace UTCClock.Business.ViewModels
                     Environment.Exit(0);
                     break;
 
-                default:
-                    CommandBase command = CommandFactory.Instance.CreateCommand(this.commandInput);
-                    CommandManager.Instance.ExecuteCommand(command);
-                    break;
+                case CommandType.Custom:
+                    try
+                    {
+                        CommandManager.Instance.ExecuteCommand(CommandFactory.Instance.CreateCommand(commandName, commandArguments));
+                        break;
+                    }
+                    catch (NotImplementedException ex)
+                    {
+                        System.Windows.Forms.MessageBox.Show(ex.Message);
+                        break;
+                    }
             }
 
             this.CommandLog.Add(this.commandInput);

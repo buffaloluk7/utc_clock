@@ -5,13 +5,24 @@ using UTCClock.Business.Model;
 
 namespace UTCClock.Business.Commands
 {
-    public class DecreaseCommand : CommandBase
+    public class DecreaseCommand : IUndoableCommand
     {
         #region Properties
 
+        private string pattern;
         private int hours;
         private int minutes;
         private int seconds;
+
+        public string Name
+        {
+            get { return "dec"; }
+        }
+
+        public string Description
+        {
+            get { return "Decrease the time."; }
+        }
 
         #endregion
 
@@ -19,14 +30,9 @@ namespace UTCClock.Business.Commands
 
         public DecreaseCommand()
         {
-            // initialize pattern 
-            base.pattern = @"^(?:dec)(?:(?:\s-)(?:(?:h\s+(?<h>[0-9]+))|(?:m\s+(?<m>[0-9]+))|(?:s\s+(?<s>[0-9]+)))){1,3}$";
-
-            // set non-harming default values
-            hours = default(int);
-            minutes = default(int);
-            seconds = default(int);
+            this.pattern = "^(?:(?:\\s*-)(?:(?:h\\s+(?<h>[0-9]+))|(?:m\\s+(?<m>[0-9]+))|(?:s\\s+(?<s>[0-9]+)))){1,3}$";
         }
+
         private DecreaseCommand(int hours, int minutes, int seconds)
         {
             this.hours = hours;
@@ -36,29 +42,33 @@ namespace UTCClock.Business.Commands
 
         #endregion
 
-        public override CommandBase Build(string input)
+        #region IUndoableCommand Implementations
+
+        public ICommand Make(string arguments)
         {
-            var match = Regex.Match(input, base.pattern);
+            Match match = Regex.Match(arguments, this.pattern);
+            int hours = 0, minutes = 0, seconds = 0;
 
             int.TryParse(match.Groups["h"].Value, out hours);
             int.TryParse(match.Groups["m"].Value, out minutes);
             int.TryParse(match.Groups["s"].Value, out seconds);
-
+            
             return new DecreaseCommand(hours, minutes, seconds);
         }
 
-        #region Implementations
-
-        public override void Execute()
+        public bool CanExecute(string arguments)
         {
-            TimeSpan t = new TimeSpan(hours, minutes, seconds);
-            ClockModel.Instance.Time = ClockModel.Instance.Time.Subtract(t);
+            return new Regex(this.pattern).Match(arguments).Success;
         }
 
-        public override void UnExecute()
+        public void Execute()
         {
-            TimeSpan t = new TimeSpan(hours, minutes, seconds);
-            ClockModel.Instance.Time = ClockModel.Instance.Time.Add(t);
+            ClockModel.Instance.Time = ClockModel.Instance.Time.Subtract(new TimeSpan(this.hours, this.minutes, this.seconds));
+        }
+
+        public void UnExecute()
+        {
+            ClockModel.Instance.Time = ClockModel.Instance.Time.Add(new TimeSpan(this.hours, this.minutes, this.seconds));
         }
 
         #endregion

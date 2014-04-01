@@ -81,7 +81,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\CommandFactory.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\ShowAllMacroCommand.cs" />
@@ -93,8 +92,10 @@
     <Compile Include="Common\ObservableObject.cs" />
     <Compile Include="Enums\ClockTypeEnum.cs" />
     <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\IObservable.cs" />
     <Compile Include="Interfaces\IObserver.cs" />
+    <Compile Include="Interfaces\IUndoableCommand.cs" />
     <Compile Include="Model\ClockModel.cs" />
     <Compile Include="Common\ObservableSubjectBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

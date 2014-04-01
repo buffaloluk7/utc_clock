@@ -4,6 +4,7 @@
         Title="Console"
         Height="350"
         Width="525"
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding Path=MainWindow, Source={StaticResource Locator}}">
     <Grid>
         <Grid.RowDefinitions>

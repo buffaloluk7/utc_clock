@@ -10,6 +10,7 @@ namespace UTCClock.Presentation.Views
         public MainWindow()
         {
             InitializeComponent();
+            SearchQuery.Focus();
         }
     }
 }
