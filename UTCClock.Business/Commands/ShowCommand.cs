@@ -34,15 +34,14 @@ namespace UTCClock.Business.Commands
 
         #region Constructors
 
+        static ShowCommand()
+        {
+            ShowCommand.timeZonesDictionary = ShowCommand.parseTimeZones();
+        }
+
         public ShowCommand()
         {
             this.pattern = "^(?:(?:\\s*-)(?:(?:t\\s+(?<t>[A-z]+))|(?:z\\s+(?<z>[A-z]+))|(?:x\\s+(?<x>[0-9]+))|(?:y\\s+(?<y>[0-9]+)))){0,4}$";
-
-            if (ShowCommand.timeZonesDictionary == null)
-            {
-                ShowCommand.timeZonesDictionary = new Dictionary<IEnumerable<string>, TimeSpan>();
-                this.parseTimeZones();
-            }
         }
 
         private ShowCommand(ClockType clockType, TimeSpan timeZone, double x, double y)
@@ -103,6 +102,10 @@ namespace UTCClock.Business.Commands
             }
         }
 
+        #endregion
+
+        #region Private Methods
+
         private void navigate<T>()
         {
             if (this.x < 0.0 && this.y < 0.0)
@@ -136,8 +139,9 @@ namespace UTCClock.Business.Commands
             }
         }
 
-        private void parseTimeZones()
+        private static Dictionary<IEnumerable<string>, TimeSpan> parseTimeZones()
         {
+            Dictionary<IEnumerable<string>, TimeSpan> timeZonesDictionary = new Dictionary<IEnumerable<string>, TimeSpan>();
             ReadOnlyCollection<TimeZoneInfo> systemTimeZones = TimeZoneInfo.GetSystemTimeZones();
             Regex regex = new Regex("(?:\\(UTC(?:[\"\\+\\-\"][\"0-9\"]{2}:[\"0-9\"]{2}){0,}\\)\\s)(?<name>.*)", RegexOptions.IgnoreCase);
 
@@ -148,10 +152,12 @@ namespace UTCClock.Business.Commands
                     if (match.Success)
                     {
                         IEnumerable<string> timeZoneCity = match.Groups["name"].Value.Split(new string[] { ", " }, StringSplitOptions.None).ToList().ConvertAll(t => t.ToLower());
-                        ShowCommand.timeZonesDictionary.Add(timeZoneCity, timeZoneInfo.BaseUtcOffset);
+                        timeZonesDictionary.Add(timeZoneCity, timeZoneInfo.BaseUtcOffset);
                     }
                 }
             }
+
+            return timeZonesDictionary;
         }
 
         #endregion

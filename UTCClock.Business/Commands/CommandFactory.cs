@@ -11,19 +11,29 @@ namespace UTCClock.Business.Commands
         private static readonly CommandFactory instance = new CommandFactory();
         private static IList<ICommand> availableCommands;
 
-        #endregion
-
-        #region Singleton
-
         public static CommandFactory Instance
         {
             get { return CommandFactory.instance; }
         }
 
-        private CommandFactory()
+        #endregion
+
+        #region Constructors
+
+        static CommandFactory()
         {
-            CommandFactory.availableCommands = this.getAvailableCommands();
+            CommandFactory.availableCommands = new ICommand[]
+            {
+                new IncreaseCommand(),
+                new DecreaseCommand(),
+                new SetCommand(),
+                new HelpCommand(),
+                new ShowCommand(),
+                new ShowAllMacroCommand()
+            };
         }
+
+        private CommandFactory() { }
 
         #endregion
 
@@ -45,23 +55,6 @@ namespace UTCClock.Business.Commands
             }
 
             throw new NotImplementedException("Command does not exist.");
-        }
-
-        #endregion
-
-        #region Available Commands
-
-        private IList<ICommand> getAvailableCommands()
-        {
-            return new ICommand[]
-            {
-                new IncreaseCommand(),
-                new DecreaseCommand(),
-                new SetCommand(),
-                new HelpCommand(),
-                new ShowCommand(),
-                new ShowAllMacroCommand()
-            };
         }
 
         #endregion
