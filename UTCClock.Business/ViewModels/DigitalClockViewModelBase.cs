@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Linq;
 using UTCClock.Business.Common;
 using UTCClock.Business.Interfaces;
 using UTCClock.Business.Model;
+using ViHo.Json.Extension;
+using ViHo.Service.Navigation;
 
 namespace UTCClock.Business.ViewModels
 {
-    public abstract class DigitalClockViewModelBase : ObservableObject, IObserver
+    public abstract class DigitalClockViewModelBase : ObservableObject, IObserver, INavigationAware
     {
         #region Properties
 
@@ -51,7 +52,7 @@ namespace UTCClock.Business.ViewModels
 
         #endregion
 
-        #region IObserver Implementations
+        #region IObserver
         public void Update()
         {
             DateTimeOffset dateTime = new DateTimeOffset(this.clock.Time).ToOffset(this.timeZoneOffset);
@@ -60,6 +61,23 @@ namespace UTCClock.Business.ViewModels
             this.Minute = dateTime.Minute;
             this.Second = dateTime.Second;
         }
+
+        #endregion
+
+        #region INavigationAware
+
+        public void OnNavigatedTo(object argument, NavigationType navigationMode)
+        {
+            if (!(argument is TimeSpan))
+            {
+                throw new ArgumentOutOfRangeException("argument", "argument has to be of type TimeSpan");
+            }
+
+            this.timeZoneOffset = (TimeSpan)argument;
+            RaisePropertyChanged("TimeZone");
+        }
+
+        public void OnNavigatedFrom() { }
 
         #endregion
     }

@@ -75,9 +75,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ViHo, Version=1.0.5199.25227, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ViHo, Version=1.0.5203.26145, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ViHo.1.0.5199.25227\lib\portable-net45+wp80+win\ViHo.dll</HintPath>
+      <HintPath>..\packages\ViHo.1.0.5203.26145\lib\portable-net45+wp80+win\ViHo.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

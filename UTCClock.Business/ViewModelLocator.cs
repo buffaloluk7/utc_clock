@@ -1,5 +1,4 @@
-﻿using System;
-using UTCClock.Business.ViewModels;
+﻿using UTCClock.Business.ViewModels;
 using ViHo.Service.Navigation;
 
 namespace UTCClock.Business
@@ -8,7 +7,7 @@ namespace UTCClock.Business
     {
         #region Properties
 
-        public static INavigationWPFService NavigationService
+        public static IWindowNavigationService NavigationService
         {
             get;
             private set;
@@ -18,7 +17,7 @@ namespace UTCClock.Business
 
         #region Register Method
 
-        public void Register(INavigationWPFService navigationService)
+        public void Register(IWindowNavigationService navigationService)
         {
             ViewModelLocator.NavigationService = navigationService;
         }

@@ -13,9 +13,9 @@ namespace UTCClock.Business.Commands
     {
         #region Properties
 
-        private double x = -1.0;
-        private double y = -1.0;
         private static Dictionary<IEnumerable<string>, TimeSpan> timeZonesDictionary;
+        private double? x;
+        private double? y;
         private string pattern;
         private ClockType clockType;
         private TimeSpan timeZone;
@@ -44,7 +44,7 @@ namespace UTCClock.Business.Commands
             this.pattern = "^(?:(?:\\s*-)(?:(?:t\\s+(?<t>[A-z]+))|(?:z\\s+(?<z>[A-z]+))|(?:x\\s+(?<x>[0-9]+))|(?:y\\s+(?<y>[0-9]+)))){0,4}$";
         }
 
-        private ShowCommand(ClockType clockType, TimeSpan timeZone, double x, double y)
+        private ShowCommand(ClockType clockType, TimeSpan timeZone, double? x = null, double? y = null)
         {
             this.clockType = clockType;
             this.timeZone = timeZone;
@@ -61,12 +61,15 @@ namespace UTCClock.Business.Commands
             Match match = Regex.Match(arguments, this.pattern);
             ClockType clockType = ClockType.None;
             TimeSpan timeZoneOffet = new TimeSpan();
-            double x = -1.0, y = -1.0;
+            double x, y;
 
             Enum.TryParse<ClockType>(match.Groups["t"].Value, true, out clockType);
             this.TryParseTimeZone(match.Groups["z"].Value, out timeZoneOffet);
-            double.TryParse(match.Groups["x"].Value, out x);
-            double.TryParse(match.Groups["y"].Value, out y);
+
+            if (!double.TryParse(match.Groups["x"].Value, out x) || !double.TryParse(match.Groups["y"].Value, out y))
+            {
+                return new ShowCommand(clockType, timeZoneOffet);
+            }
 
             return new ShowCommand(clockType, timeZoneOffet, x, y);
         }
@@ -108,13 +111,13 @@ namespace UTCClock.Business.Commands
 
         private void navigate<T>()
         {
-            if (this.x < 0.0 && this.y < 0.0)
+            if (x.HasValue && y.HasValue)
             {
-                ViewModelLocator.NavigationService.Navigate<T>(this.timeZone);
+                ViewModelLocator.NavigationService.Navigate<T>(this.x.Value, this.y.Value, this.timeZone);   
             }
             else
             {
-                ViewModelLocator.NavigationService.Navigate<T>(this.timeZone, null, this.x, this.y);
+                ViewModelLocator.NavigationService.Navigate<T>(this.timeZone);
             }
         }
 

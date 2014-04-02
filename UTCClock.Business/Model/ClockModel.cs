@@ -36,7 +36,7 @@ namespace UTCClock.Business.Model
                     {
                         if (ClockModel.instance == null)
                         {
-                            ClockModel.instance = new ClockModel(DateTime.UtcNow);
+                            ClockModel.instance = new ClockModel(DateTime.Now);
                         }
                     }
                 }

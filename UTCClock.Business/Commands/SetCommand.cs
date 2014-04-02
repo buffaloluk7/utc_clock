@@ -65,6 +65,7 @@ namespace UTCClock.Business.Commands
         public void Execute()
         {
             this.oldTime = ClockModel.Instance.Time;
+
             ClockModel.Instance.Time = new DateTime(this.oldTime.Year, this.oldTime.Month, this.oldTime.Day, this.newHours, this.newMinutes, this.newSeconds);
         }
 

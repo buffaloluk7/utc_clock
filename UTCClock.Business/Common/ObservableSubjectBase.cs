@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using UTCClock.Business.Interfaces;
 
 namespace UTCClock.Business.Common
@@ -31,14 +32,13 @@ namespace UTCClock.Business.Common
 
         public void Notify()
         {
-            foreach(IObserver observer in this.observers)
+            Parallel.ForEach<IObserver>(this.observers, (o) =>
             {
-                if (observer != null)
+                if (o != null)
                 {
-                    observer.Update();
+                    o.Update();
                 }
-            }
-            this.observers.RemoveAll(o => o == null);
+            });
         }
 
         #endregion

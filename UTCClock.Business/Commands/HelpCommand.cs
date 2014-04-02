@@ -15,7 +15,7 @@ namespace UTCClock.Business.Commands
 
         public string Description
         {
-            get { return "HelpCommand displays some useful information."; }
+            get { return "Displays some useful information."; }
         }
 
         #endregion
@@ -35,7 +35,7 @@ namespace UTCClock.Business.Commands
         public void Execute()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Willkommen bei der Hilfe. Ich hoffe ich konnte Dir helfen.");
+            sb.AppendLine("Willkommen bei der Hilfe.");
             sb.AppendLine();
 
             foreach (var command in CommandFactory.Instance.AvailableCommands)
