@@ -4,7 +4,7 @@ using System.Windows;
 using UTCClock.Business;
 using UTCClock.Business.ViewModels;
 using UTCClock.Presentation.Views;
-using ViHo.WPF.Service.Navigation;
+using Luvi.WPF.Service.Navigation;
 
 namespace UTCClock.Presentation
 {

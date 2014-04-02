@@ -2,8 +2,8 @@
 using UTCClock.Business.Common;
 using UTCClock.Business.Interfaces;
 using UTCClock.Business.Model;
-using ViHo.Json.Extension;
-using ViHo.Service.Navigation;
+using Luvi.Json.Extension;
+using Luvi.Service.Navigation;
 
 namespace UTCClock.Business.ViewModels
 {

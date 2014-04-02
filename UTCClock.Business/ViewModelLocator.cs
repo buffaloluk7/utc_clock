@@ -1,5 +1,5 @@
 ﻿using UTCClock.Business.ViewModels;
-using ViHo.Service.Navigation;
+using Luvi.Service.Navigation;
 
 namespace UTCClock.Business
 {
